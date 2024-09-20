@@ -1,4 +1,4 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import { Controller, Get, Param, Render } from '@nestjs/common';
 import { AppService } from './app.service';
 import { quotes } from './quotes';
 
@@ -67,6 +67,60 @@ export class AppController {
       return{
         quotes: myMap
       }
+
+  }
+
+
+  @Get("quotes/:id")
+  @Render("OneQuote")
+  getOneQuote(@Param('id') id: string)
+  {
+
+    let myId = parseInt(id) - 1;
+
+
+    
+
+
+
+    return{
+      quotes: quotes.quotes[myId]
+    }
+
+
+
+  }
+
+
+  @Get("DeleteQuote/:id")
+  @Render("DeleteQuote")
+  deleteQuote(@Param('id') id: string)
+  {
+
+    let myId = parseInt(id) - 1;
+    
+
+    let myLenght = quotes.quotes.splice(myId,1).length
+ 
+    if(myLenght == 0)
+    {
+      console.log(myLenght)
+      return{ 
+        msg: "Ismeretlen idézet"
+        }
+    }
+    else
+    {
+      return{
+        msg: "Sikeres törlés"
+      }
+    }
+
+
+
+   
+
+
 
   }
 
